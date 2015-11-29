@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "utf-8" ?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+    <tlib-version>1.0</tlib-version>
+    <short-name>mytag</short-name>
+    <uri>/WEB-INF/tld/mytaglib.tld</uri>
+
+
+    <tag>
+        <name>AdminOrderTag</name>
+        <tag-class>jstl.AdminOrderTag</tag-class>
+        <body-content>empty</body-content>
+
+
+        <attribute>
+            <name>order</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>local</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>button</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>AddNewOrderTag</name>
+        <tag-class>jstl.AddNewOrderTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <name>local</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <name>EmployerTag</name>
+        <tag-class>jstl.EmployerTag</tag-class>
+        <body-content>empty</body-content>
+
+        <attribute>
+            <name>employer</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>local</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>involved</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <name>UserOrderTag</name>
+        <tag-class>jstl.UserOrderTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>order</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>local</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+</taglib>
