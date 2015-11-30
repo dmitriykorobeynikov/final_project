@@ -1,5 +1,7 @@
 package db;
 
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -8,6 +10,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public class ConnectionPool {
+
+    private static final Logger log = Logger.getLogger(ConnectionPool.class);
 
     private static BlockingQueue<Connection> connectionQueue;
     //private static BlockingQueue<Connection> givenAwayConQueue;
@@ -21,15 +25,16 @@ public class ConnectionPool {
     static  {
         try {
             Class.forName(driverName);
-            connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
             //givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
             for (int i = 0; i < poolSize; i++) {
                 Connection connection = DriverManager.getConnection(url, user, password);
                 connectionQueue.add(connection);
             }
         } catch (SQLException e) {
+            log.error("Can't get connection",e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            log.error("Can't find class for database driver",e);
         }
     }
 
@@ -41,6 +46,7 @@ public class ConnectionPool {
         try {
             closeConnectionsQueue(connectionQueue);
         } catch (SQLException e) {
+            log.error("Can't close connection",e);
         }
     }
 
@@ -52,6 +58,7 @@ public class ConnectionPool {
             //System.out.println("Taking Connection, pool size = " + connectionQueue.size());
 
         } catch (InterruptedException e) {
+            log.error("Can't take connection",e);
         }
         return connection;
     }

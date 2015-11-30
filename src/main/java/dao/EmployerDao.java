@@ -1,6 +1,7 @@
 package dao;
 
 
+import org.apache.log4j.Logger;
 import records.Employer;
 import records.Order;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 public class EmployerDao {
     private Connection connection;
+    private static final Logger log = Logger.getLogger(EmployerDao.class);
 
     public EmployerDao(Connection connection) {
         this.connection = connection;
@@ -19,8 +21,8 @@ public class EmployerDao {
 
     public ArrayList<Employer> selectInvolvedEmployers(int order_id){
         ArrayList<Employer> list = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
 
         try {
             String query = "SELECT * FROM employer WHERE id IN (SELECT employer_id FROM order_employer WHERE order_id = ?)";
@@ -33,15 +35,15 @@ public class EmployerDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return list;
     }
 
     public ArrayList<Employer> selectUnInvolvedEmployers(int order_id){
         ArrayList<Employer> list = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
 
         try {
             String query = "SELECT * FROM employer WHERE id NOT IN (SELECT employer_id FROM order_employer WHERE order_id = ?)";
@@ -54,14 +56,14 @@ public class EmployerDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return list;
     }
 
 
     public void insertOrderEmployer(int order_id, int employer_id){
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             String query = "INSERT INTO order_employer (order_id, employer_id) VALUES (?,?)";
             ps = connection.prepareStatement(query);
@@ -70,13 +72,13 @@ public class EmployerDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
     }
 
     public void deleteOrderEmployer(int order_id, int employer_id){
 
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             String query = "DELETE FROM order_employer WHERE order_id = ? AND employer_id = ?";
             ps = connection.prepareStatement(query);
@@ -85,7 +87,7 @@ public class EmployerDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
     }
 }

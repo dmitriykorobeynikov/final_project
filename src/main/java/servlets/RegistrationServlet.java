@@ -45,11 +45,8 @@ public class RegistrationServlet extends HttpServlet{
             HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(30*60);
 
-            try {
-                user = userDao.getByLoginAndPassword(login, password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            user = userDao.getByLoginAndPassword(login, password);
+
             session.setAttribute("id",user.getId());
             session.setAttribute("login",user.getLogin());
             session.setAttribute("role",user.getRole());

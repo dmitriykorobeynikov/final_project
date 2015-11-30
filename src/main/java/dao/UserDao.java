@@ -1,5 +1,6 @@
 package dao;
 
+import org.apache.log4j.Logger;
 import records.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,15 +9,16 @@ import java.sql.SQLException;
 
 public class UserDao {
     private Connection connection;
+    private static final Logger log = Logger.getLogger(UserDao.class);
 
     public UserDao(Connection connection){
         this.connection = connection;
     }
 
-    public User getByLoginAndPassword(String login, String password) throws SQLException {
+    public User getByLoginAndPassword(String login, String password){
         User user = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs ;
         try {
             String query = "SELECT * FROM user WHERE login = ? AND password = ?";
             ps = connection.prepareStatement(query);
@@ -30,14 +32,14 @@ public class UserDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return user;
     }
 
     public boolean insert(User user){
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
 
         try {
             String query = "SELECT id FROM user WHERE login = ?";
@@ -53,7 +55,7 @@ public class UserDao {
             rs.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
 
         try {
@@ -66,7 +68,7 @@ public class UserDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
 
         return true;

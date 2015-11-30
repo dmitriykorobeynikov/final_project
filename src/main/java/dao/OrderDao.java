@@ -1,6 +1,7 @@
 package dao;
 
 
+import org.apache.log4j.Logger;
 import records.Order;
 import java.sql.Connection;
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class OrderDao {
     private Connection connection;
+    private static final Logger log = Logger.getLogger(OrderDao.class);
 
     public OrderDao(Connection connection) {
         this.connection = connection;
@@ -20,8 +22,8 @@ public class OrderDao {
 
     public ArrayList<Order> selectByUserId(int user_id){
         ArrayList<Order> list = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs ;
 
         try {
             String query = "SELECT * FROM testbd.order WHERE user_id = ?";
@@ -34,7 +36,7 @@ public class OrderDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return list;
 
@@ -42,8 +44,8 @@ public class OrderDao {
 
     public ArrayList<Order> selectAll(){
         ArrayList<Order> list = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
 
         try {
             String query = "SELECT * FROM testbd.order";
@@ -55,13 +57,13 @@ public class OrderDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return list;
     }
 
     public void update(Order order){
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             String query = "UPDATE testbd.order SET user_id = ?, type_of_work = ?, volume = ?, finish_date = ?  WHERE id = ?";
             ps = connection.prepareStatement(query);
@@ -74,12 +76,12 @@ public class OrderDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
     }
 
     public void delete(Order order){
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             String query = "DELETE FROM testbd.order WHERE id = ?";
             ps = connection.prepareStatement(query);
@@ -92,7 +94,7 @@ public class OrderDao {
     }
 
     public void insert(Order order){
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             String query = "INSERT INTO testbd.order (user_id, type_of_work , volume , finish_date) VALUES (?,?,?,?)";
             ps = connection.prepareStatement(query);
@@ -104,7 +106,7 @@ public class OrderDao {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
     }
 

@@ -12,6 +12,7 @@
     <fmt:setBundle basename="localization" var="loc" />
     <fmt:message bundle="${loc}" key="account.welcome" var="welcome" />
     <fmt:message bundle="${loc}" key="account.logout" var="logout" />
+    <fmt:message bundle="${loc}" key="orders.address" var="address" />
     <fmt:message bundle="${loc}" key="account.orders.type_of_work" var="type_of_work" />
     <fmt:message bundle="${loc}" key="account.orders.volume" var="volume" />
     <fmt:message bundle="${loc}" key="account.orders.finish_date" var="finish_date" />
@@ -26,7 +27,7 @@ ${welcome}, ${sessionScope.login}!
 </form>
 
 <table>
-    <thead><tr><th>${type_of_work}</th><th>${volume}</th><th>${finish_date}</th></tr></thead>
+    <thead><tr><th>${address}</th><th>${type_of_work}</th><th>${volume}</th><th>${finish_date}</th></tr></thead>
     <tbody>
     <c:forEach items="${requestScope.orders}" var="order">
         <mytag:AdminOrderTag order="${order}" button="true" local="${sessionScope.local}"/>

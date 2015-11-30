@@ -1,5 +1,6 @@
 package dao;
 
+import org.apache.log4j.Logger;
 import records.Order;
 import records.OrderForAdmin;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 public class OrderForAdminDao {
     private Connection connection;
+    private static final Logger log = Logger.getLogger(OrderForAdminDao.class);
 
     public OrderForAdminDao(Connection connection) {
         this.connection = connection;
@@ -18,8 +20,8 @@ public class OrderForAdminDao {
 
     public ArrayList<OrderForAdmin> selectAll(){
         ArrayList<OrderForAdmin> list = new ArrayList<>();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
 
         try {
             String query = "SELECT `order`.id,user_id,type_of_work,volume,finish_date," +
@@ -32,15 +34,15 @@ public class OrderForAdminDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return list;
     }
 
     public OrderForAdmin selectByOrderId(int id){
         OrderForAdmin orderForAdmin = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         try {
             String query = "SELECT `order`.id,user_id,type_of_work,volume,finish_date," +
                     "address FROM testbd.`order`,testbd.user WHERE user.id = `order`.user_id AND `order`.id = ?";
@@ -53,7 +55,7 @@ public class OrderForAdminDao {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Can't perform a query",e);
         }
         return orderForAdmin;
     }

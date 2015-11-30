@@ -30,15 +30,13 @@ public class LoginServlet extends HttpServlet{
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        User user = null;
-        try{
-            Connection connect = ConnectionPool.takeConnection();
-            UserDao userDao = new UserDao(connect);
-            user = userDao.getByLoginAndPassword(login, password);
-            ConnectionPool.returnConnection(connect);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        User user;
+
+        Connection connect = ConnectionPool.takeConnection();
+        UserDao userDao = new UserDao(connect);
+        user = userDao.getByLoginAndPassword(login, password);
+        ConnectionPool.returnConnection(connect);
+
 
         if (user != null){
             HttpSession session = request.getSession(true);
@@ -48,8 +46,6 @@ public class LoginServlet extends HttpServlet{
             session.setAttribute("login",user.getLogin());
             session.setAttribute("role",user.getRole());
 
-
-            //System.out.println("LoginServlet " + session.getAttribute("local"));
 
             if(session.getAttribute("role").equals("user")){
                 response.sendRedirect("account.jsp");

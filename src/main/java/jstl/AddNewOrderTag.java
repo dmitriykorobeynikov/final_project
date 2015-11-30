@@ -1,5 +1,6 @@
 package jstl;
 
+import org.apache.log4j.Logger;
 import records.Order;
 
 import javax.servlet.jsp.JspWriter;
@@ -11,7 +12,7 @@ import java.util.ResourceBundle;
 
 
 public class AddNewOrderTag extends TagSupport {
-
+    private static final Logger log = Logger.getLogger(AddNewOrderTag.class);
     private String local;
 
     public String getLocal() {
@@ -34,7 +35,7 @@ public class AddNewOrderTag extends TagSupport {
             out.write("</form>");
         }
         catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can't get pageContext",e);
         }
         return SKIP_BODY;
     }
