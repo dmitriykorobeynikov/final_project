@@ -17,7 +17,6 @@ public class IndexServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         request.getSession(true).setAttribute("local", request.getParameter("local"));
-        //request.getRequestDispatcher("index.jsp").forward(request, response);
         response.sendRedirect("index.jsp");
     }
 
